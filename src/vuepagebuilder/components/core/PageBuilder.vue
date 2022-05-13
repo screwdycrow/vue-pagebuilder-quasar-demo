@@ -1,14 +1,16 @@
 <template>
-  <div :class="{'page-builder':true,'edit':editPage}">
-    <div class="component-wrapper" v-for="component in componentStructure(gui)">
-      <div style="display: flex; justify-content: space-between" v-if="editPage">
-        <span style="color:grey;">
+  <div :class="{'page-builder':true,'edit':editPage}" >
+    <div class="component-wrapper"
+         v-for="component in componentStructure(gui)"
+    >
+      <div v-if="editPage" class="options">
+        <span style="color:grey;" @click="setActiveComponent({gui,component})">
           {{componentTypes[component.type].label}}
         </span>
         <div style="display: flex; border-radius: 50px; justify-content: end;">
-          <component-form :componentModel="component" :gui="gui"></component-form>
+<!--          <component-form :componentModel="component" :gui="gui"></component-form>-->
           <button class="" @click="removeComponentClick(component.id)">
-            <img :src="deleteIcon">
+            <img @click="setActiveComponent" :src="deleteIcon">
           </button>
           <button class="" @click="moveComponentUpClick(component.id)">
             <img :src="upIcon">
@@ -42,14 +44,18 @@ export default {
 
 <style scoped>
 .edit {
-  padding: 10px 10px 0px 10px;
   border: dotted gray 1px;
-
 }
 
+.edit .component-wrapper .options{
+  display: none;
+}
+.edit .component-wrapper:hover > .options:first-child {
+  display: flex;  justify-content: space-between;
+  transition-delay: 1s;
+}
 .edit .component-wrapper {
   padding: 10px;
-  border: dashed gray 1px;
 }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -39,17 +39,27 @@
         />
       </q-list>
     </q-drawer>
+    <q-drawer
 
+    v-if="isPageBuilderComponentEdit"
+      side="right"
+      show-if-above
+      bordered
+    >
+    <component-props :is-global="false"></component-props>
+    </q-drawer>
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import {computed, defineComponent, ref} from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import ToggleEditPage from "src/vuepagebuilder/components/core/ToggleEditPage";
+import {useStore} from "vuex";
+import ComponentProps from "src/vuepagebuilder/components/core/ComponentProps";
 
 const linksList = [
   {
@@ -100,17 +110,21 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
+    ComponentProps,
     ToggleEditPage,
     EssentialLink
   },
 
-  setup () {
+  setup() {
     const leftDrawerOpen = ref(false)
-
+    const store = useStore()
     return {
+      activeGui:computed(()=>store.state.pageBuilder.activeGui),
+      activeComponent:computed(()=>store.getters['pageBuilder/activeComponent']),
+      isPageBuilderComponentEdit: computed(() => store.state.pageBuilder.editPage && store.getters["pageBuilder/activeComponentEdit"]),
       essentialLinks: linksList,
       leftDrawerOpen,
-      toggleLeftDrawer () {
+        toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
     }

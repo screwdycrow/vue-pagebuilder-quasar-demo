@@ -40,21 +40,20 @@
                 </label>
                 <div class="field">
                   <input class="input"
+                         v-on:keydown="updateComponentClick()"
                          v-if="item.type!== 'select'"
                          :type="item.type"
                          v-model="component.props[key]"
                   />
                   <div class="select" v-if="item.type === 'select'">
-                    <select v-model="component.props[key]">
+                    <select v-model="component.props[key]" v-on:change="updateComponentClick()">
                       <option v-for="option in item.items" v-bind:value="option.value">
                         {{ option.text }}
                       </option>
                     </select>
                   </div>
                 </div>
-
               </div>
-
             </form>
           </div>
           <div class="card-footer">

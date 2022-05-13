@@ -1,7 +1,9 @@
-
+import _ from 'lodash'
 export const pageBuilderModule = {
     namespaced: true,
     state: () => ({
+        activeGui:null,
+        activeComponent:null,
         editPage: false,
         tempGuis: {},
         pageName: 'gui',
@@ -33,6 +35,16 @@ export const pageBuilderModule = {
         }
     },
     mutations: {
+        setActiveComponent(state, {gui, component} ){
+          if(component && gui){
+            const index = state.guis[gui].findIndex(c=>c.id === component.id )
+            state.activeComponent = _.cloneDeep(state.guis[gui][index]);
+            state.activeGui = gui
+          }else{
+            state.activeComponent = null
+            state.activeGui = null
+          }
+        },
         initGui(state, gui) {
             if (state.guis[gui] === undefined) {
                 state.guis[gui] = []
@@ -96,6 +108,8 @@ export const pageBuilderModule = {
         }
     },
     getters: {
+        activeComponent:(s) => s.activeComponent,
+        activeComponentEdit:(s) =>s.activeComponent !== null,
         componentTypes: (s) => s.types,
         componentStructure: (s) => (gui) => {
             return s.guis[gui]

@@ -25,5 +25,11 @@ export default {
 </script>
 
 <style scoped>
+.columns{
+  display: flex;
+}
+.columns .column{
+  flex:1;
+}
 
 </style>

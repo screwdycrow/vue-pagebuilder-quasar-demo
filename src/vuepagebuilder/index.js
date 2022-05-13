@@ -10,6 +10,8 @@ import PageListEditor from "src/vuepagebuilder/components/core/PageListEditor";
 import PageForm from "src/vuepagebuilder/components/core/PageForm";
 import {pageBuilderModule} from "src/vuepagebuilder/modules/PageBuilderModule";
 import {pagesModule} from "src/vuepagebuilder/modules/PagesModule";
+import './styles/main.css'
+import ComponentProps from "src/vuepagebuilder/components/core/ComponentProps";
 /**
  * @desc Creates an object instance of the plugin with its required store module components.
  * @param componentTypes
@@ -19,6 +21,7 @@ export function createPageBuilder(componentTypes) {
     return {
         install: (app, {store,router}) => {
             app.component('PageBuilder', PageBuilder)
+            app.component('ComponentProps', ComponentProps)
             app.component('PageBuilderSpacer', PageBuilderSpacer)
             app.component('PageBuilderToggleEdit', ToggleEditPage)
             app.component('PageBuilderSideTools', PageBuilderSideTools)

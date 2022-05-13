@@ -19,6 +19,7 @@ export default {
       'getGuis'
     ]),
     ...mapMutations('pageBuilder', [
+      'setActiveComponent',
       "toggleEditPage",
       "cancelEditPage",
       "moveComponentUp",
