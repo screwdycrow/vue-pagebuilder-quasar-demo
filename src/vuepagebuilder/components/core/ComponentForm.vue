@@ -1,6 +1,7 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div>
     <button
+      class="button"
         @click="dialog=!dialog;"
     >
       <img v-if="isEditMode" :src="editIcon">
@@ -188,5 +189,12 @@ export default {
 </script>
 
 <style scoped>
-
+.button{
+  background: none;
+  border:none;
+}
+.button:hover{
+  background: #ccc;
+  cursor: pointer;
+}
 </style>

@@ -9,7 +9,7 @@
       </label>
       <div class="field">
         <input class="input"
-               v-on:keyup="updateComponentClick()"
+               v-on:change="updateComponentClick()"
                v-if="item.type!== 'select'"
                :type="item.type"
                v-model="component.props[key]"
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import _ from "lodash";
 import editIcon from "src/vuepagebuilder/assets/icons/edit_black_24dp.svg";
 import addIcon from "src/vuepagebuilder/assets/icons/add_black_24dp.svg";
 import {mapGetters, mapMutations} from "vuex";
@@ -35,7 +34,6 @@ import {mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "ComponentProps",
-  name: "ComponentForm",
   data: () => ({
     dialog: false,
     valid: true,
@@ -55,11 +53,9 @@ export default {
     isGlobal: Boolean,
   },
   watch: {
-    'component.type': function (val) {
-      this.componentSelectionChange(val)
-    },
     componentModel() {
       this.component.type = this.componentModel.type
+      this.componentSelectionChange()
     }
   },
   computed: {
@@ -141,7 +137,7 @@ export default {
       this.component.props = null;
       this.component.type = null;
     },
-    componentSelectionChange(value) {
+    componentSelectionChange() {
       this.component.props = null
       for (const [key, value] of Object.entries(this.selectedComponentProps)) {
         if (this.component.props === null) {

@@ -104,12 +104,12 @@ export const pageBuilderModule = {
         },
         updateComponent(state, {gui, props, id}) {
             const index = state.guis[gui].findIndex(c => c.id === id)
-            state.guis[gui][index].props = props;
+            state.guis[gui][index].props = _.cloneDeep(props);
         }
     },
     getters: {
         activeComponent:(s) => s.activeComponent,
-        activeComponentEdit:(s) =>s.activeComponent !== null,
+        activeComponentEdit:(s) =>s .activeComponent !== null,
         componentTypes: (s) => s.types,
         componentStructure: (s) => (gui) => {
             return s.guis[gui]

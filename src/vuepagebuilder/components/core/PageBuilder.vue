@@ -4,26 +4,29 @@
          v-for="component in componentStructure(gui)"
     >
       <div v-if="editPage" class="options">
-        <span style="color:grey;" @click="setActiveComponent({gui,component})">
+        <span class="label" @click="setActiveComponent({gui,component})">
           {{componentTypes[component.type].label}}
         </span>
-        <div style="display: flex; border-radius: 50px; justify-content: end;">
+        <div class="buttons">
 <!--          <component-form :componentModel="component" :gui="gui"></component-form>-->
-          <button class="" @click="removeComponentClick(component.id)">
-            <img @click="setActiveComponent" :src="deleteIcon">
+          <button class="button" @click="removeComponentClick(component.id)">
+            <img :src="deleteIcon">
           </button>
-          <button class="" @click="moveComponentUpClick(component.id)">
+          <button class="button" @click="moveComponentUpClick(component.id)">
             <img :src="upIcon">
           </button>
-          <button class="" @click="moveComponentDownClick(component.id)">
+          <button class="button" @click="moveComponentDownClick(component.id)">
             <img :src="downIcon">
           </button>
         </div>
       </div>
-      <component
+      <div class="component">
+        <component
           :is="componentTypes[component.type].component"
           v-bind="{component:component, ...component.props}">
-      </component>
+        </component>
+      </div>
+
     </div>
     <component-form v-if="editPage" :gui="gui"></component-form>
   </div>
@@ -43,19 +46,54 @@ export default {
 </script>
 
 <style scoped>
+.label{
+  color:grey;
+  cursor: pointer;
+}
 .edit {
-  border: dotted gray 1px;
+  margin:2px;
+  border: dotted grey 1px;
 }
 
-.edit .component-wrapper .options{
-  display: none;
+.edit .component {
+
 }
-.edit .component-wrapper:hover > .options:first-child {
-  display: flex;  justify-content: space-between;
-  transition-delay: 1s;
+.edit .buttons{
+  margin-left: 10px;
+  overflow: hidden;
+  opacity: 0;
+  display: flex;  border-radius: 50px; align-items: center; justify-content: end;
+}
+.edit .component-wrapper .options{
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  margin-bottom: 0.5em;
+
+}
+.edit .component-wrapper:hover > .options:first-of-type .buttons {
+  opacity: 1;
+  background: #eee;
+  transition: all .25s ease-in;
 }
 .edit .component-wrapper {
+  transition: 0.5s ease;
   padding: 10px;
+  margin:5px;
+  border: dotted grey 1px;
+
+
 }
+
+.button{
+  background: none;
+  border:none;
+  opacity: 0.6;
+}
+.button:hover{
+  background: #ccc;
+  cursor: pointer;
+}
+
 
 </style>
